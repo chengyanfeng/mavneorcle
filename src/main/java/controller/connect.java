@@ -1,10 +1,11 @@
 package controller;
 import java.sql.*;
-import java.util.Properties;
+import java.util.*;
+
 import oracle.jdbc.pool.OracleDataSource;
 
 public class connect {
-   public static void con(){
+   public static List<Map<String,Object>> con(){
       try{
           String username="OUTLN";
           String password="123";
@@ -24,21 +25,39 @@ public class connect {
           int count=rsmd.getColumnCount();
 
           String[] name=new String[count];
-
+          List<String> list =new ArrayList<String>();
           for(int i=0;i<count;i++) {
               name[i] = rsmd.getColumnName(i + 1);
+              list.add(name[i]);
               System.out.print(name[i]);
 
           }
+        List<Map<String,Object>> datelist=new ArrayList<Map<String,Object>>();
+          while (rs.next()){
+              Map<String,Object> map=new HashMap<String, Object>();
+              for (int i=0;i<list.size();i++){
 
-          System.in.read();
+                  Object object = rs.getObject(list.get(i));
+                  map.put(list.get(i),object);
+                  System.out.print(object);
+              }
+             datelist.add(map);
+
+
+          }
+          System.out.print(datelist);
+          return datelist;
+
+
+
     }
         catch(
     Exception e)
 
     {
+
         System.out.println(e.getMessage());
     }
-
+    return null;
    }
 }

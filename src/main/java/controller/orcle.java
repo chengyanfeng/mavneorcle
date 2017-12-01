@@ -3,6 +3,8 @@ package controller;
 /**
  * Created by Administrator on 2017/11/30 0030.
  */
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,17 +15,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
 
 @ComponentScan
 @RestController
 @EnableAutoConfiguration
 public class orcle {
+    Gson gson = new GsonBuilder().create();
 
     @RequestMapping("/")
     String home() {
 
-        connect.con();
-        return "Hello World!";
+        List<Map<String, Object>> con = connect.con();
+        return gson.toJson(con);
     }
 
     @RequestMapping("/hello/{myName}")
