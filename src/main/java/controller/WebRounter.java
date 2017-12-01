@@ -35,8 +35,8 @@ public class WebRounter {
             String returndata = Select(sql, map);
             return returndata;
         } else {
-            String lg = Updata(sql, map);
-            return lg;
+            String ok = Updata(sql, map);
+            return ok;
         }
 
     }
