@@ -37,8 +37,11 @@ public class OrcleDBConect {
         List<Map<String, Object>> datelist = new ArrayList<Map<String, Object>>();
 
          Connection conn = con(sql, datamap);
-         PreparedStatement ps = conn.prepareStatement(sql);
-         rs = ps.executeQuery();
+        PreparedStatement  ps = con.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
+        //每次存100条数据返回一次
+        ps.setFetchSize(100);
+        ps.setFetchDirection(ResultSet.FETCH_REVERSE);
+        rs = ps.executeQuery();
          ResultSetMetaData rsmd = rs.getMetaData();
          int count = rsmd.getColumnCount();
          String[] name = new String[count];
